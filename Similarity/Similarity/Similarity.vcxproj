@@ -127,6 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="alphabetCheck.cpp" />
+    <ClCompile Include="alphabetCheck_test.cpp" />
     <ClCompile Include="similar.cpp" />
     <ClCompile Include="similar_test.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'"> %(AdditionalOptions)</AdditionalOptions>
