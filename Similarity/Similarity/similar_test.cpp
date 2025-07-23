@@ -1,5 +1,5 @@
 #include "gmock/gmock.h"
-#include "split.cpp"
+#include "similar.cpp"
 
 using namespace testing;
 
