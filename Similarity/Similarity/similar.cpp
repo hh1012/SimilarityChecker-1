@@ -1,32 +1,33 @@
-#include <iostream>
 #include <string>
-using namespace std;
 
-class LenChecker {
+using std::string;
+
+class LengthCheck {
 public:
-	int getScore(const string& a, const string& b) {
-		if (a.length() == b.length()) {
-			return MAX_SCORE;
-		}
-		
-		int longerlen, shorterlen;
-		if (a.length() > b.length()) {
-			longerlen = a.length();
-			shorterlen = b.length();
-		}
-		else {
-			shorterlen = a.length();
-			longerlen = b.length();
-		}
+    int getResult(string input1, string input2) {
+        int A = std::max(input1.length(), input2.length());
+        int B = std::min(input1.length(), input2.length());
 
-		if (longerlen >= shorterlen * 2) return 0.0;
-		
-		int ret = static_cast<int>((1.0 - (longerlen - shorterlen) / static_cast<double>(shorterlen)) * 60);
+        if (isSame(A, B)) return LENGTH_MAX_POINT;
+        if (isDoubleLength(A, B)) return LENGTH_MIN_POINT;
 
-		return ret;
-
-	}
+        return getPartialLengthPoint(A, B);
+    }
 
 private:
-	const int MAX_SCORE = 60.0;
+    bool isSame(int A, int B) {
+        return A == B;
+    }
+
+    bool isDoubleLength(int A, int B) {
+        return A >= B * 2;
+    }
+
+    int getPartialLengthPoint(int A, int B) {
+        int Gap = A - B;
+        return (LENGTH_MAX_POINT - (LENGTH_MAX_POINT * Gap) / B);
+    }
+
+    const int LENGTH_MAX_POINT = 60;
+    const int LENGTH_MIN_POINT = 0;
 };

@@ -1,29 +1,48 @@
 #include "gmock/gmock.h"
-#include "similar.cpp"
+#include "split.cpp"
+
 using namespace testing;
 
-TEST(TC, TC1) {
-	LenChecker app;
-	int actual = app.getScore("ASD", "DSA");
-	int expected = 60;
-	EXPECT_EQ(expected, actual);
+class LengthFixture : public Test {
+public:
+    LengthCheck app;
+
+    void diagLength(int expectedPoint, string input1, string input2) {
+        int actual = app.getResult(input1, input2);
+        EXPECT_EQ(expectedPoint, actual);
+    }
+};
+
+TEST_F(LengthFixture, PerfectLength) {
+    diagLength(60, "ABCD", "BBEQ");
+    diagLength(60, "WER", "WEE");
+    diagLength(60, "W", "W");
 }
 
-TEST(TC, TC2) {
-	LenChecker app;
-	int actual = app.getScore("A", "BB");
-	int expected = 0;
-	EXPECT_EQ(expected, actual);
+TEST_F(LengthFixture, ZeroPointSet) {
+    diagLength(0, "ABCD", "ERWERSDFSD");
+    diagLength(0, "ABCD", "ERWEERWE");
+    diagLength(0, "A", "AA");
 }
 
-TEST(TC, TC3) {
-	LenChecker app;
-	int actual = app.getScore("AAABB", "BAA");
-	int expected = 20;
-	EXPECT_EQ(expected, actual);
+TEST_F(LengthFixture, AOver) {
+    diagLength(0, "ERWERSDABCD", "SDF");
+    diagLength(0, "SDFSDF", "SDF");
+    diagLength(0, "AA", "A");
+}
+
+TEST_F(LengthFixture, BOver) {
+    diagLength(20, "EWRWE", "SDF");
+    diagLength(15, "SQWREDF", "FDEW");
+
+}
+
+TEST_F(LengthFixture, TC5) {
+    diagLength(15, "FDEW", "SQWREDF");
+    diagLength(20, "SDF", "EWRWE");
 }
 
 int main() {
-	::testing::InitGoogleMock();
-	return RUN_ALL_TESTS();
+    ::testing::InitGoogleMock();
+    return RUN_ALL_TESTS();
 }
