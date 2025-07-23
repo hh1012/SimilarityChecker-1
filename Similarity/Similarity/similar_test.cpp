@@ -8,7 +8,6 @@ TEST(TC, TC1) {
 	EXPECT_EQ(60, expected);
 }
 
-
 int main() {
 	::testing::InitGoogleMock();
 	return RUN_ALL_TESTS();
